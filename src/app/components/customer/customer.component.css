@@ -1,0 +1,50 @@
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.main-body {
+  max-width: 70%;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.add-customer-button {
+  float: right;
+  margin-top: 10px;
+}
+
+.edit-button-margin{
+margin-right: 10px;
+}
+
+.content {
+  padding-top: 10px;
+}
+.row {
+  display: flex;
+  gap: 10px;
+}
+mat-form-field {
+  width: 100%;
+}
+
+/*.mat-dialog-actions button {
+  flex: 1;
+} */
+.actios-margin{
+margin-bottom: 15px;
+margin-right: 10px;
+
+}
+.cancel-button-margin{
+
+}

@@ -1,0 +1,145 @@
+<div class="main-body ">
+<form [formGroup]="customerForm"   (ngSubmit)="submit()">
+  <div  mat-dialog-title>
+    <h1>Customer Form</h1>
+  </div>
+  <mat-form-field>
+    <mat-label>Search for Customers</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. José" #input>
+  </mat-form-field>
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput type="text" placeholder="Ex. José " formControlName="firstName" >
+        <mat-error *ngIf="firstName?.errors?.['required']">
+          First Name is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput type="text" placeholder="Ex. Júnior" formControlName="lastName" >
+        <mat-error *ngIf="lastName?.errors?.['required']">
+          Last Name is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="aluno25162@ipt.pt" formControlName="email">
+        <mat-error *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          Please enter a valid email address.
+        </mat-error>
+        <mat-error *ngIf="email?.errors?.['required']">
+          Email is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input matInput type="text" formControlName="phoneNumber" placeholder="Ex : (+351)213-456-789" maxlength="17">
+        <mat-error *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)">
+          Invalid phone number format! Ex : (+351)213-456-789 or 351-213-456-789
+        </mat-error>
+        <mat-error *ngIf="phoneNumber?.errors?.['required']">
+          Phone Number is required
+        </mat-error>
+        <mat-error *ngIf="phoneNumber?.errors?.['min']">
+          Non-negative numbers!
+        </mat-error>
+        <mat-error *ngIf="phoneNumber?.errors?.['minlength']">
+          Account number cannot be less than 9 digits!
+        </mat-error>
+
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Date Of Birth </mat-label>
+        <input matInput type="date"  formControlName="dateOfBirth">
+        <mat-error *ngIf="dateOfBirth?.errors?.['required']">
+          Date of birth is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Bank Account Number</mat-label>
+        <input matInput type="text"  formControlName="bankAccountNumber"  maxlength="12" >
+        <mat-error *ngIf="bankAccountNumber?.errors?.['required']">
+          Bank Account is required!
+        </mat-error>
+
+        <mat-error *ngIf="bankAccountNumber?.errors?.['minlength']">
+          Account number cannot be less than 8 digits!
+        </mat-error>
+        <mat-error *ngIf="bankAccountNumber?.errors?.['maxlength']">
+          Account number cannot be more than 12 digits!
+        </mat-error>
+        <mat-error *ngIf="bankAccountNumber?.errors?.['pattern']">
+          Account number must contain digits only!
+        </mat-error>
+
+        <mat-error *ngIf="bankAccountNumber?.errors?.['min']">
+          Non-negative numbers!
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="actios-margin">
+    <button mat-raised-button color="primary" [disabled]="customerForm.invalid " style="margin-right: 9px;">Add Customer</button>
+    <button mat-raised-button type="reset"  (click)="cancelForm()">Clear Form</button>
+  </div>
+  </form>
+
+  <div class="mat-elevation-z1 ">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+        <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateOfBirth">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Of Birth </th>
+        <td mat-cell *matCellDef="let row"> {{row.dateOfBirth | date}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="bankAccountNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Bank Account Number </th>
+        <td mat-cell *matCellDef="let row"> {{row.bankAccountNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <td mat-cell *matCellDef="let row" class="actions-buttons">
+          <button mat-icon-button >
+            <mat-icon color="primary" class="edit-button-margin" (click)=" openEditForm(row)">
+              edit
+            </mat-icon >
+            <mat-icon color="warn"  (click)="deleteCustomer(row.email)">
+              delete
+            </mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>
+
+
+
+

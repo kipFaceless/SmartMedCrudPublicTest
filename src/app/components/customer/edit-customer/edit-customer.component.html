@@ -1,0 +1,86 @@
+
+<form [formGroup]="customerForm"   (ngSubmit)="updateCustomer()">
+  <div  mat-dialog-title>
+    <h1>Customer Form</h1>
+  </div>
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput type="text" placeholder="Ex. José " formControlName="firstName" [(ngModel)]="data.firstName">
+        <mat-error *ngIf="firstName?.errors?.['required']">
+          First Name is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput type="text" placeholder="Ex. Júnior" formControlName="lastName" [(ngModel)]="data.lastName">
+        <mat-error *ngIf="lastName?.errors?.['required']">
+          Last Name is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="aluno25162@ipt.pt" formControlName="email"  [(ngModel)]="data.email">
+        <mat-error *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          Please enter a valid email address.
+        </mat-error>
+        <mat-error *ngIf="email?.errors?.['required']">
+          Email is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input matInput type="text" formControlName="phoneNumber"  [(ngModel)]="data.phoneNumber" placeholder="Ex : (+351)213-456-789" maxlength="17">
+        <mat-error *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)">
+          Invalid phone number format! Ex : (+351)213-456-789 or 351-213-456-789
+        </mat-error>
+        <mat-error *ngIf="phoneNumber?.errors?.['required']">
+          Phone Number is required
+        </mat-error>
+        <mat-error *ngIf="phoneNumber?.errors?.['min']">
+          Non-negative numbers!
+        </mat-error>
+        <mat-error *ngIf="phoneNumber?.errors?.['minlength']">
+          Account number cannot be less than 9 digits!
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Date Of Birth </mat-label>
+        <input matInput type="date"  formControlName="dateOfBirth"  [(ngModel)]="data.dateOfBirth">
+        <mat-error *ngIf="dateOfBirth?.errors?.['required']">
+          Date of required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Bank Account Number</mat-label>
+        <input matInput type="text" formControlName="bankAccountNumber" [(ngModel)]="data.bankAccountNumber">
+        <mat-error *ngIf="bankAccountNumber?.errors?.['required']">
+          Bank Account is required!
+        </mat-error>
+
+        <mat-error *ngIf="bankAccountNumber?.errors?.['minlength']">
+          Account number cannot be less than 8 digits!
+        </mat-error>
+        <mat-error *ngIf="bankAccountNumber?.errors?.['maxlength']">
+          Account number cannot be more than 12 digits!
+        </mat-error>
+        <mat-error *ngIf="bankAccountNumber?.errors?.['pattern']">
+          Account number must contain digits only!
+        </mat-error>
+
+        <mat-error *ngIf="bankAccountNumber?.errors?.['min']">
+          Non-negative numbers!
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" [disabled]="customerForm.invalid ">Save</button>
+    <button mat-raised-button type="button" (click)="cancelForm()">Cancel</button>
+  </div>
+  </form>
